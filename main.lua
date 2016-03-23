@@ -108,7 +108,7 @@ function love.load(arg)
 	end
 
 	-- Load sounds
-	player.shootSound = love.sound.newSoundData('assets/Sound/Shoot.wav')
+	player.shootSound = love.audio.newSource('assets/Sound/Shoot.wav', 'static')
 end
 
 function love.update(dt)
@@ -145,6 +145,11 @@ function love.update(dt)
 		table.insert(bullets, newBullet)
 		canShoot = false
 		canSchootTimer = canSchootTimerMax
+
+		if player.shootSound:isPlaying() then
+			love.audio.stop(player.shootSound)
+		end
+		love.audio.play(player.shootSound)
 	end
 	
 	-- Change in scale of graphics
